@@ -86,16 +86,21 @@ function CommentSection() {
   };
 
   const handleCommentDelete = (commentId) => {
-    axios
-      .delete(`http://localhost:3005/comment/${commentId}`)
-      .then(() => {
-        setComments((prevComments) =>
-          prevComments.filter((comment) => comment._id !== commentId)
-        );
-      })
-      .catch((error) => {
-        console.error("Error deleting comment:", error);
-      });
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this comment?"
+    );
+    if (shouldDelete) {
+      axios
+        .delete(`http://localhost:3005/comment/${commentId}`)
+        .then(() => {
+          setComments((prevComments) =>
+            prevComments.filter((comment) => comment._id !== commentId)
+          );
+        })
+        .catch((error) => {
+          console.error("Error deleting comment:", error);
+        });
+    }
   };
 
   const handleCommentEdit = (commentId, updatedContent) => {
@@ -143,7 +148,7 @@ function CommentSection() {
       })
       .catch((error) => {
         console.error("Error sending reply data:", error);
-      }); 
+      });
   };
 
   function disconnect() {
@@ -156,41 +161,42 @@ function CommentSection() {
       <div className="header">
         <h2>Comments</h2>
         <button
-            className="disconnect-btn"
-            onClick={() => {
-              disconnect();
-            }}
-          >
-            Disconnect
-          </button>
+          className="disconnect-btn"
+          onClick={() => {
+            disconnect();
+          }}
+        >
+          Disconnect
+        </button>
       </div>
 
       <form onSubmit={handleCommentSubmit}>
-        <label>
-          Comment:
-          <textarea
-            name="content"
-            placeholder="Add a comment..."
-            value={newComment.content}
-            onChange={handleCommentChange}
-          />
-        </label>
-        <br />
-        <button className="submit-btn" type="submit">Submit</button>
+        <textarea
+          name="content"
+          placeholder="Add a comment..."
+          value={newComment.content}
+          onChange={handleCommentChange}
+        />
+        <button className="submit-btn" type="submit">
+          Submit
+        </button>
       </form>
+
       <div className="comment-section">
         {comments.map((comment) => (
           <div key={comment._id} className="comment-item">
             <div className="user-date-container">
-                      <p>UserID: {comment.userId}</p>
-                      <p> {comment.createdAt}</p>
-                    </div>
+              <p>UserID: {comment.userId}</p>
+              <p> {comment.createdAt}</p>
+            </div>
             <p className="comments"> {comment.content}</p>
             {/* <p>UserID: {comment.userId}</p> */}
             {/* <p>Created At: {comment.createdAt}</p>
             <p>Upvotes: {comment.upvotes}</p> */}
+
+            {/* Edit Comments */}
             {isEditing && editCommentId === comment._id ? (
-              <div>
+              <div className="edit-input-container">
                 <input
                   type="text"
                   value={editCommentContent}
@@ -210,19 +216,19 @@ function CommentSection() {
             ) : (
               <>
                 <button
-                className="edit-btn"
+                  className="edit-btn"
                   onClick={() => {
                     setIsEditing(true);
                     setEditCommentContent(comment.content);
                     setEditCommentId(comment._id);
-                    
                   }}
                 >
                   Edit
                 </button>
-                <button 
-                className="delete-btn"
-                onClick={() => handleCommentDelete(comment._id)}>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleCommentDelete(comment._id)}
+                >
                   Delete
                 </button>
               </>
@@ -233,15 +239,12 @@ function CommentSection() {
               {comment.replies &&
                 comment.replies.map((reply) => (
                   <div key={reply._id} className="reply-item">
-
                     <div className="user-date-container">
                       <p>UserID: {reply.userId}</p>
                       <p> {reply.createdAt}</p>
                     </div>
 
-                    <p className="comments reply-comment">
-                       {reply.content}
-                    </p>
+                    <p className="comments reply-comment">{reply.content}</p>
                   </div>
                 ))}
             </div>
@@ -254,15 +257,17 @@ function CommentSection() {
                 setReplyContent("");
               }}
             >
-              <label>
-                Reply:
-                <textarea
-                  name="replyContent"
-                  value={replyContent}
-                  onChange={(event) => setReplyContent(event.target.value)}
-                />
-              </label>
-              <button className="submit-btn" type="submit">Submit Reply</button>
+              <textarea
+                name="replyContent"
+                className="reply-form-container"
+                placeholder="Leave your replie here..."
+                value={replyContent}
+                onChange={(event) => setReplyContent(event.target.value)}
+              />
+
+              <button className="submit-btn" type="submit">
+                Submit Reply
+              </button>
             </form>
           </div>
         ))}

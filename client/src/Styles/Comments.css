@@ -67,11 +67,19 @@
     margin-bottom: -1.8rem;
 }
 
+.edit-input-container{
+  display: flex;
+  gap: 1rem;
+}
 .reply-comment{
     width:60%;
-
   }
 
-/* .replies{
-    border: 5px solid black;
-  } */
+  .reply-form-container{
+    margin-top: 1rem;
+  }
+
+  ::placeholder {
+    color: #3a3a3a;
+    font-size: 1.1rem
+    }
