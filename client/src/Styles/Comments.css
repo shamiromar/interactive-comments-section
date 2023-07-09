@@ -1,0 +1,77 @@
+.comments-container {
+    max-width: 37.5rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: #f5f6fa;
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.2);
+  }
+  
+  .hide-section {
+    display: none;
+  }
+
+  .header{
+    display:flex;
+    justify-content: space-between;
+  }
+
+  .submit-btn{
+    margin-top:1rem;
+  }
+
+  button{
+    padding: 0.5625rem 0.9375rem;
+    border-radius: 0.3125rem;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    background-color: #2e5ca7ec;
+  }
+
+  .disconnect-btn {
+    border-radius: 0.3125rem;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    background-color: #e71c1c;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .edit-btn{
+    background-color: green;
+  }
+
+  .delete-btn{
+    background-color: #e71c1c;
+    margin-left: 1rem;
+  }
+
+
+  input,
+ .comments,
+ textarea {
+  padding: 1.5rem;
+  border: none;
+  width: 80%;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.user-date-container{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: -1.8rem;
+}
+
+.reply-comment{
+    width:60%;
+
+  }
+
+/* .replies{
+    border: 5px solid black;
+  } */

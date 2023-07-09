@@ -46,7 +46,7 @@ function Signup() {
         }}>
           Signup</button>
           </div>
-        <p>
+        <p className="info-text">
           If you have an account {" "}
           <a
           className="signup-login-anchor"

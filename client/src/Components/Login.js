@@ -51,7 +51,7 @@ function Login() {
           Login
         </button>
       </div>
-      <p>
+      <p className="info-text">
         If you do not have an account{" "}
         <a
           className="signup-login-anchor"
