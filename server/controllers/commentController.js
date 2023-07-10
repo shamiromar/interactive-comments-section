@@ -22,8 +22,8 @@ const deleteComment = async (req, res) => {
 
 const editComment = async (req, res) => {
   const editComment = await Comment.findByIdAndUpdate(
-     req.params.id ,
-     req.body
+    { _id: req.params.id },
+    req.body
   );
   res.send({ msg: "comment edited " });
 };
@@ -34,17 +34,17 @@ const getAllUserComments = async (req, res) => {
 };
 
 const postReply = async (req, res) => {
-    const comment = await Comment.findById(req.params.commentId);
+  const comment = await Comment.findById(req.params.commentId);
 
-    const reply = {
-      content: req.body.content,
-      userId: req.body.userId,
-      createdAt: req.body.createdAt,
-    };
+  const reply = {
+    content: req.body.content,
+    userId: req.body.userId,
+    createdAt: req.body.createdAt,
+  };
 
-    comment.replies.push(reply);
-    await comment.save();
-    res.send({ msg: "reply posted successfully" })
+  comment.replies.push(reply);
+  await comment.save();
+  res.send({ msg: "reply posted successfully" })
 };
 
 module.exports = {

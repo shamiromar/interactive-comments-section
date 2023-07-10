@@ -1,48 +1,49 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function CommentSection() {
   const navigate = useNavigate();
   const [newComment, setNewComment] = useState({
-    content: "",
-    userId: "",
+    content: '',
+    email: '',
+    userId: '',
     createdAt: Date.now(),
-    upvotes: "",
+    upvotes: '',
     replies: [],
   });
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState({
-    _id: "",
-    email: "",
+    _id: '',
+    email: '',
   });
-  const [replyContent, setReplyContent] = useState("");
-  const [editCommentContent, setEditCommentContent] = useState("");
+  const [replyContent, setReplyContent] = useState('');
+  const [editCommentContent, setEditCommentContent] = useState('');
   const [editCommentId, setEditCommentId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem('token')) {
       axios
-        .post("http://localhost:3005/user/verify", {
-          token: localStorage.getItem("token"),
+        .post('http://localhost:3005/user/verify', {
+          token: localStorage.getItem('token'),
         })
         .then(({ data }) => {
           if (data.userData._id) {
             console.log(data.userData);
             setUser(data.userData);
             axios
-              .get("http://localhost:3005/comment/" + data.userData._id)
+              .get('http://localhost:3005/comment/' + data.userData._id)
               .then(({ data }) => {
-                console.log("user comments", data);
+                console.log('user comments', data);
                 setComments(data);
               });
           } else {
-            navigate("/");
+            navigate('/');
           }
         });
     } else {
-      navigate("/");
+      navigate('/');
     }
   }, []);
 
@@ -58,37 +59,35 @@ function CommentSection() {
   const handleCommentSubmit = (event) => {
     event.preventDefault();
     console.log(newComment);
-
+  
+    // Update newComment object with user's email
+    const updatedComment = { ...newComment, email: user.email };
+  
     axios
-      .post("http://localhost:3005/comment", newComment)
+      .post('http://localhost:3005/comment', updatedComment)
       .then(() => {
-        setNewComment({
-          content: "",
-          userId: "",
-          createdAt: Date.now(),
-          upvotes: "",
-          replies: [],
-        });
+        setNewComment((prevComment) => ({
+          ...prevComment,
+          content: '',
+        }));
         // Fetch the updated comments after successful submission
         axios
-          .get("http://localhost:3005/comment/" + user._id)
+          .get('http://localhost:3005/comment/' + user._id)
           .then(({ data }) => {
-            console.log("user comments", data);
+            console.log('user comments', data);
             setComments(data);
           })
           .catch((error) => {
-            console.error("Error fetching comments:", error);
+            console.error('Error fetching comments:', error);
           });
       })
       .catch((error) => {
-        console.error("Error sending comment data:", error);
+        console.error('Error sending comment data:', error);
       });
   };
 
   const handleCommentDelete = (commentId) => {
-    const shouldDelete = window.confirm(
-      "Are you sure you want to delete this comment?"
-    );
+    const shouldDelete = window.confirm('Are you sure you want to delete this comment?');
     if (shouldDelete) {
       axios
         .delete(`http://localhost:3005/comment/${commentId}`)
@@ -98,36 +97,35 @@ function CommentSection() {
           );
         })
         .catch((error) => {
-          console.error("Error deleting comment:", error);
+          console.error('Error deleting comment:', error);
         });
     }
   };
 
   const handleCommentEdit = (commentId, updatedContent) => {
     axios
-      .put(`http://localhost:3005/comment/${commentId}`, {
-        content: updatedContent,
-      })
+      .put(`http://localhost:3005/comment/${commentId}`, { content: updatedContent })
       .then(() => {
         // Fetch the updated comments after successful edit
         axios
-          .get("http://localhost:3005/comment/" + user._id)
+          .get('http://localhost:3005/comment/' + user._id)
           .then(({ data }) => {
-            console.log("user comments", data);
+            console.log('user comments', data);
             setComments(data);
           })
           .catch((error) => {
-            console.error("Error fetching comments:", error);
+            console.error('Error fetching comments:', error);
           });
       })
       .catch((error) => {
-        console.error("Error updating comment:", error);
+        console.error('Error updating comment:', error);
       });
   };
 
   const handleReply = (commentId) => {
     const reply = {
       content: replyContent,
+      email: user.email,
       userId: user._id,
       createdAt: Date.now(),
     };
@@ -137,24 +135,25 @@ function CommentSection() {
       .then(() => {
         // Fetch the updated comments after successful reply
         axios
-          .get("http://localhost:3005/comment/" + user._id)
+          .get('http://localhost:3005/comment/' + user._id)
           .then(({ data }) => {
-            console.log("user comments", data);
+            console.log('user comments', data);
             setComments(data);
           })
           .catch((error) => {
-            console.error("Error fetching comments:", error);
+            console.error('Error fetching comments:', error);
           });
       })
       .catch((error) => {
-        console.error("Error sending reply data:", error);
+        console.error('Error sending reply data:', error);
       });
   };
 
   function disconnect() {
-    localStorage.removeItem("token");
-    navigate("/");
+    localStorage.removeItem('token');
+    navigate('/');
   }
+
 
   return (
     <div className="comments-container">
@@ -186,13 +185,10 @@ function CommentSection() {
         {comments.map((comment) => (
           <div key={comment._id} className="comment-item">
             <div className="user-date-container">
-              <p>UserID: {comment.userId}</p>
-              <p> {comment.createdAt}</p>
+              <p>{comment.email}</p>
+              <p>Created At: {comment.createdAt}</p>
             </div>
             <p className="comments"> {comment.content}</p>
-            {/* <p>UserID: {comment.userId}</p> */}
-            {/* <p>Created At: {comment.createdAt}</p>
-            <p>Upvotes: {comment.upvotes}</p> */}
 
             {/* Edit Comments */}
             {isEditing && editCommentId === comment._id ? (
@@ -240,10 +236,9 @@ function CommentSection() {
                 comment.replies.map((reply) => (
                   <div key={reply._id} className="reply-item">
                     <div className="user-date-container">
-                      <p>UserID: {reply.userId}</p>
-                      <p> {reply.createdAt}</p>
+                      <p>{reply.email}</p>
+                      <p>Created At: {reply.createdAt}</p>
                     </div>
-
                     <p className="comments reply-comment">{reply.content}</p>
                   </div>
                 ))}
@@ -260,11 +255,10 @@ function CommentSection() {
               <textarea
                 name="replyContent"
                 className="reply-form-container"
-                placeholder="Leave your replie here..."
+                placeholder="Leave your reply here..."
                 value={replyContent}
                 onChange={(event) => setReplyContent(event.target.value)}
               />
-
               <button className="submit-btn" type="submit">
                 Submit Reply
               </button>
