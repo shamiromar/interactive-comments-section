@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 
 const replySchema = new mongoose.Schema({
   content: String,
+  email: String,
   userId: String,
   createdAt: Date,
 });
 
 const commentSchema = new mongoose.Schema({
   content: String,
+  email: String,
   userId: String,
   createdAt: Date,
   upvotes: Number,
