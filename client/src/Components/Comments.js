@@ -186,7 +186,7 @@ function CommentSection() {
           <div key={comment._id} className="comment-item">
             <div className="user-date-container">
               <p>{comment.email}</p>
-              <p>Created At: {comment.createdAt}</p>
+              <p>{comment.createdAt}</p>
             </div>
             <p className="comments"> {comment.content}</p>
 
@@ -237,7 +237,7 @@ function CommentSection() {
                   <div key={reply._id} className="reply-item">
                     <div className="user-date-container">
                       <p>{reply.email}</p>
-                      <p>Created At: {reply.createdAt}</p>
+                      <p>{reply.createdAt}</p>
                     </div>
                     <p className="comments reply-comment">{reply.content}</p>
                   </div>
