@@ -33,20 +33,6 @@ const getAllUserComments = async (req, res) => {
   res.send(userComments);
 };
 
-const postReply = async (req, res) => {
-  const comment = await Comment.findById(req.params.commentId);
-
-  const reply = {
-    content: req.body.content,
-    userId: req.body.userId,
-    createdAt: req.body.createdAt,
-  };
-
-  comment.replies.push(reply);
-  await comment.save();
-  res.send({ msg: "reply posted successfully" })
-};
-
 module.exports = {
   getAllComments,
   getOneComment,
@@ -54,5 +40,4 @@ module.exports = {
   deleteComment,
   editComment,
   getAllUserComments,
-  postReply,
 };
