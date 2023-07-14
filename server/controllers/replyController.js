@@ -1,7 +1,7 @@
 const Reply = require("../modules/reply");
 
-//get replies by topic
-const getReplyByTopic = async (req, res) => {
+//get all replies on a comment
+const getReplyByCommentId = async (req, res) => {
   const reply = await Reply.find({ commentId: req.params.commentId });
   res.send(reply);
 };
@@ -22,4 +22,11 @@ const deleteReply = async (req, res) => {
 const editReply = async (req, res) => {
   await Reply.findByIdAndUpdate({ _id: req.params.id }, req.body);
   res.send({ msg: "Update saved" });
+};
+
+module.exports = {
+  getReplyByCommentId,
+  postReply,
+  deleteReply,
+  editReply,
 };
