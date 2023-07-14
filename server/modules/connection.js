@@ -1,5 +1,18 @@
-const mongoose = require("mongoose")
-const db = mongoose.connect(
-    "mongodb+srv://kostask:zeblomadison@cluster0.0pprqos.mongodb.net/comments?retryWrites=true&w=majority"
-)
-module.exports = db
+const mongoose = require("mongoose");
+
+const connectionParams = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+
+const db = mongoose
+  .connect(
+    "mongodb+srv://shamiroomar:shamiro43@cluster0.kbkujwz.mongodb.net/interactiveComments?retryWrites=true&w=majority",
+    connectionParams
+  )
+  .then(() => {
+    console.log(`Connected to MongoDB database`);
+  })
+  .catch((err) => console.log("Error connecting to the database", err));
+
+module.exports = db;

@@ -1,25 +1,13 @@
-const db = require('./connection.js');
-const mongoose = require('mongoose');
+const db = require("./connection.js");
+const mongoose = require("mongoose");
 
-const replySchema = new mongoose.Schema({
+const CommentSchema = mongoose.model("Comments", {
+  title: String, //main topic title
   content: String,
-  email: String,
+  username: String,
   userId: String,
-  createdAt: Date,
-});
-
-const commentSchema = new mongoose.Schema({
-  content: String,
-  email: String,
-  userId: String,
-  createdAt: Date,
+  date: String,
   upvotes: Number,
-  replies: {
-    type: [replySchema],
-    default: [],
-  },
 });
 
-const Comment = mongoose.model('Comment', commentSchema);
-
-module.exports = Comment;
+module.exports = CommentSchema;

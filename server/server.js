@@ -5,16 +5,20 @@ app.use(express.json());
 
 const commentRouter = require("./routers/commentRouter");
 const userRouter = require("./routers/userRouter");
+const replyRouter = require("./routers/replyRouter");
+const postRouter = require("./routers/postRouter");
 
 app.use(
-    cors({
-        origin: "*",
-    })
+  cors({
+    origin: "*",
+  })
 );
 
-app.use("/comment", commentRouter);
-app.use("/user", userRouter);
+app.use("/", commentRouter);
+app.use("/", userRouter);
+app.use("/", replyRouter);
+app.use("/", postRouter);
 
 app.listen(3005, () => {
-    console.log("server is running on port 3005");
+  console.log("server is running on port 3005");
 });
