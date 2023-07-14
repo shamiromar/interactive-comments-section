@@ -1,5 +1,11 @@
 const Post = require("../modules/post");
 
+//create a post
+const createPost = async (req, res) => {
+  const newPost = await Post.create(req.body);
+  res.send({ msg: "new topic created successfully" });
+};
+
 //get all posts
 const getAllPosts = async (req, res) => {
   const post = await Post.find();
@@ -43,4 +49,5 @@ module.exports = {
   getOnePostFromTitle,
   deletePost,
   editPost,
+  createPost,
 };

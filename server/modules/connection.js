@@ -1,3 +1,10 @@
+const mongoose = require("mongoose");
+
+const connectionParams = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+
 const db = mongoose
   .connect(
     "mongodb+srv://shamiroomar:shamiro43@cluster0.kbkujwz.mongodb.net/interactiveComments?retryWrites=true&w=majority",

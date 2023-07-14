@@ -33,17 +33,16 @@ const editComment = async (req, res) => {
   res.send({ msg: "comment edited " });
 };
 
-const getAllUserComments = async (req, res) => {
+const getAllUserCommentsByUserId = async (req, res) => {
   const userComments = await Comment.find({ userId: req.params.userId });
   res.send(userComments);
 };
 
 module.exports = {
-  getAllComments,
+  getAllUserCommentsByUserId,
   getOneComment,
+  getAllCommentsByTitle,
   postOneComment,
   deleteComment,
   editComment,
-  getAllUserComments,
-  getAllCommentsByTitle,
 };
