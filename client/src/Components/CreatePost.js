@@ -36,7 +36,7 @@ function CreatePost() {
           }
         });
     } else {
-      alert("you have to login to create new topic");
+      window.alert("you have to login to create new topic");
       navigate("/"); // go to login
     }
   }
