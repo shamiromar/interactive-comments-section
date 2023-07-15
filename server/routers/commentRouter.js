@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const commentController = require("../controllers/commentController.js");
 
-router.get("/comment/:title", commentController.getAllCommentsByTitle);
-router.get("/comment/:userId", commentController.getAllUserCommentsByUserId);
+router.get("/comments", commentController.getAllComments);
+router.get("/comment/title/:title", commentController.getAllCommentsByTitle);
+router.get("/comment/user/:userId", commentController.getAllUserCommentsByUserId);
 router.get("/comment/:id", commentController.getOneComment);
 router.post("/comment/new", commentController.postOneComment);
 router.delete("/comment/delete/:id", commentController.deleteComment);

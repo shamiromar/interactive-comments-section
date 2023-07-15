@@ -1,5 +1,15 @@
 const Comment = require("../modules/comment.js");
 
+//get all comments
+const getAllComments = async (req, res) => {
+  try {
+    const comments = await Comment.find();
+    res.send(comments);
+  } catch (error) {
+    console.log("Error getting all comments", error);
+  }
+};
+
 //get all comments for one topic by title
 const getAllCommentsByTitle = async (req, res) => {
   const comments = await Comment.find({ title: req.params.title });
@@ -45,4 +55,5 @@ module.exports = {
   postOneComment,
   deleteComment,
   editComment,
+  getAllComments,
 };
