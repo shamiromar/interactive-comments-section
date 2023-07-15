@@ -20,7 +20,7 @@ const getOnePost = async (req, res) => {
 
 //get one post from title
 const getOnePostFromTitle = async (req, res) => {
-  const post = await Post.findOne({ title: req.params.title });
+  const post = await Post.find({ title: req.params.title });
   res.send(post);
 };
 
