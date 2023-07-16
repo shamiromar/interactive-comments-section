@@ -9,25 +9,22 @@ function PostPage() {
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());
-  const [newComment, setNewComment] = useState({
-    title: "",
-    content: comment,
-    username: "",
-    userId: "",
-    date: new Date(),
-  });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3005/post/title/" + localStorage.topic)
+      .then(({ data }) => {
+        console.log(data[0].title);
+        setTitle(data[0].title);
+        setPost(data[0].content);
+        localStorage.removeItem("topic");
+      });
+  }, []);
 
   return (
     <div>
+      <textarea placeholder="Title" value={title}></textarea>
       <textarea
-        placeholder="Title"
-        value={title}
-        onChange={(e) => {
-          setTitle(e.target.value);
-        }}
-      ></textarea>
-      <textarea
-        placeholder="New Post"
         value={post}
         onChange={(e) => {
           setPost(e.target.value);
