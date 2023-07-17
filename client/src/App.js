@@ -17,6 +17,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<TopicTable />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/comments" element={<Comments />} />
             <Route path="/allcomments" element={<AllComments />} />
