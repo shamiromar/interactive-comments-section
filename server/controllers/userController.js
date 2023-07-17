@@ -54,11 +54,8 @@ const verify = async (req, res) => {
     if (payload) {
       const user = await User.findOne({ _id: payload.id });
       if (user) {
-        const token = jwt.sign({ _id: user._id }, "difficultPrivateKey");
-        res.send({
-          userData: user,
-          token: token,
-        });
+        //const token = jwt.sign({ _id: user._id }, "difficultPrivateKey");
+        res.send(user);
       } else {
         res.send("Invalid Token");
       }
