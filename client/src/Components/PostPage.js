@@ -13,13 +13,6 @@ function PostPage() {
   const [date, setDate] = useState(new Date());
   const [replies, setReplies] = useState([]);
   const [reply, setReply] = useState("");
-  const [newComment, setNewComment] = useState({
-    title: post.title,
-    content: comment,
-    username: user.username,
-    userId: user._id,
-    date: new Date(),
-  });
   const [newReply, setNewReply] = useState({
     content: reply,
     username: user.username,
@@ -36,7 +29,6 @@ function PostPage() {
         })
         .then(({ data }) => {
           console.log(data);
-
           if (data._id) {
             setUser(data);
             console.log({
@@ -60,7 +52,7 @@ function PostPage() {
               });
           } else {
             console.log("wrong");
-            navigate("/"); //go to login
+            navigate("/topicTable"); //go to login
           }
         });
     } else {
@@ -69,7 +61,7 @@ function PostPage() {
     }
   }
 
-  function replyOnComment() {
+  /*function replyOnComment() {
     if (localStorage.getItem("token")) {
       axios
         .post("http://localhost:3005/user/verify", {
@@ -80,9 +72,9 @@ function PostPage() {
             setUser(data);
             console.log(data._id);
             axios
-              .post("http://localhost:3005/reply", newComment)
+              .post("http://localhost:3005/reply", newReply)
               .then(({ data }) => {
-                console.log(newComment);
+                console.log(newReply);
                 alert(data.msg);
                 //window.location.reload(false);
               });
@@ -94,7 +86,7 @@ function PostPage() {
       window.alert("you have to login to reply");
       navigate("/login"); // go to login
     }
-  }
+  }*/
 
   useEffect(() => {
     if (localStorage.topic) {
@@ -107,22 +99,31 @@ function PostPage() {
           axios
             .get("http://localhost:3005/comment/title/" + localStorage.topic)
             .then(({ data }) => {
+              if (data) {
+                console.log(data);
+                setComments(data);
+              }
+            });
+
+          /*axios
+            .get("http://localhost:3005/comment/title/" + localStorage.topic)
+            .then(({ data }) => {
               console.log(data);
               if (data) {
                 console.log(data);
                 setComments(data);
                 axios
-                  .get("http://localhost:3005/reply/" + comment._id)
+                  .get("http://localhost:3005/reply/" + res._id)
                   .then(({ reply }) => {
                     if (reply) {
                       setReplies(reply);
                     }
                   });
               }
-            });
+            });*/
         });
     } else {
-      navigate("/");
+      navigate("/topicTable");
     }
     //localStorage.removeItem("topic");
   }, []);
@@ -159,7 +160,25 @@ function PostPage() {
                 <li>
                   {comments.username}
                   {comments.content}
-                  {Moment(comments.date).format("MMMM Do YYYY, h:mm:ss a")}
+                </li>
+              </div>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default PostPage;
+
+/*{comments.map((comments) => {
+            return (
+              <div>
+                <li>
+                  {comments.username}
+                  {comments.content}
+                  {Moment(comments.date).format("MMMM DD YYYY, h:mm:ss a")}
                   <div>
                     <textarea
                       placeholder="Reply"
@@ -184,7 +203,7 @@ function PostPage() {
                             {reply.username}
                             {reply.content}
                             {Moment(reply.date).format(
-                              "MMMM Do YYYY, h:mm:ss a"
+                              "MMMM DD YYYY, h:mm:ss a"
                             )}
                           </li>
                         </div>
@@ -194,11 +213,4 @@ function PostPage() {
                 </li>
               </div>
             );
-          })}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-export default PostPage;
+          })}*/

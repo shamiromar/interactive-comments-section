@@ -32,7 +32,7 @@ function CreatePost() {
                 alert(data.msg);
               });
           } else {
-            navigate("/"); //go to login
+            navigate("/");
           }
         });
     } else {

@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,6 +14,10 @@ function NavBar() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+  };
+
+  const signOut = () => {
+    localStorage.removeItem("token");
   };
 
   return (
@@ -26,13 +31,25 @@ function NavBar() {
           </Nav>
           <Nav>
             {isLoggedIn ? (
-              <Button variant="info" size="sm" onClick={handleLogout}>
+              <Button
+                variant="info"
+                size="sm"
+                onClick={() => {
+                  handleLogout();
+                  signOut();
+                }}
+              >
                 Logout
               </Button>
             ) : (
-              <Button variant="info" size="sm" onClick={handleLogin}>
-                Login
-              </Button>
+              <div>
+                <Button variant="info" size="sm" onClick={handleLogin}>
+                  Login
+                </Button>
+                <Button variant="info" size="sm" onClick={handleLogout}>
+                  Signup
+                </Button>
+              </div>
             )}
           </Nav>
         </Navbar.Collapse>
