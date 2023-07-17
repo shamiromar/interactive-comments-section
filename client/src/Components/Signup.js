@@ -1,64 +1,163 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
 function Signup() {
-    const navigate = useNavigate();
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
-  
-    function toLogin() {
-      navigate("/");
-    }
-      function signup(){
-        axios.post("http://localhost:3005/user/signup", {email,password}).then(({ data}) => {
-          if(data.token) {
-            localStorage.setItem("token",data.token);
-            navigate("/comments")
-          }else{
-            alert(data.msg)
-          }
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function toLogin() {
+    navigate("/");
+  }
+
+  function signup() {
+    axios
+      .post("http://localhost:3005/user/signup", {
+        email,
+        password,
       })
-    }
-  
-    return ( 
-      <div className="signup-login-container">
+      .then((response) => {
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+          console.log("Token Saved in local storage");
+          navigate("/comments");
+        } else {
+          alert("Enter valid email and password");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  return (
+    <div className="signup-login-container">
       <h1 className="app-title">Comment Section</h1>
       <div className="input-button-container">
-        <input 
-        type="email" 
-        placeholder="email" 
-        onChange = {(e)=>{
-          setEmail(e.target.value);
-        }}
+        <input
+          type="email"
+          placeholder="email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
         />
-        <input 
-        type="password" 
-        placeholder="password"
-        onChange = {(e)=>{
-          setPassword(e.target.value)
-        }}
+        <input
+          type="password"
+          placeholder="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         />
-        <button
-        className="signup-login-btn"
-         onClick={()=>{
-          signup();
-        }}>
-          Signup</button>
-          </div>
-        <p className="info-text">
-          If you have an account {" "}
-          <a
-          className="signup-login-anchor"
-            onClick={() => {
-              toLogin();
-            }}
-          >
-            {" "}
-            Login
-          </a>
-        </p>
+        <button className="signup-login-btn" onClick={signup}>
+          Signup
+        </button>
       </div>
-    );
-  }
+      <p className="info-text">
+        If you have an account{" "}
+        <Link to="/" className="signup-login-anchor">
+          Login
+        </Link>
+      </p>
+    </div>
+  );
+}
+
 export default Signup;
+
+
+
+
+
+
+// import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
+// import axios from "axios";
+
+// function Signup() {
+//     const navigate = useNavigate();
+//     const [email,setEmail] = useState("");
+//     const [password,setPassword] = useState("");
+
+//     function toLogin() {
+//       navigate("/");
+//     }
+
+//     function signup() {
+//       axios
+//         .post("http://localhost:3005/user/signup", {
+//           email,
+//           password,
+//         })
+//         .then((response) => {
+//           if (response.data.token) {
+//             localStorage.setItem("token", response.data.token);
+//             console.log("Token Saved in local storage");
+//             navigate("/comments");
+//           } else {
+//             alert("Enter valid email and password");
+//           }
+//         })
+//         .catch((error) => {
+//           console.log(error);
+//         });
+//     }
+
+
+//     //   function signup(){
+//     //     axios.post("http://localhost:3005/user/signup", {email,password}).then(({ data}) => {
+//     //       if(data.token) {
+//     //         localStorage.setItem("token",data.token);
+//     //         navigate("/comments")
+//     //         console.log("Token Saved in local storage");
+//     //       }else{
+//     //         alert("Enter valid email and password");
+//     //       }
+//     //   })
+//     //   .catch((error) => {
+//     //     console.log(error);
+//     //   });
+//     // }
+
+//     return (
+//       <div className="signup-login-container">
+//       <h1 className="app-title">Comment Section</h1>
+//       <div className="input-button-container">
+//         <input
+//         type="email"
+//         placeholder="email"
+//         onChange = {(e)=>{
+//           setEmail(e.target.value);
+//         }}
+//         />
+//         <input
+//         type="password"
+//         placeholder="password"
+//         onChange = {(e)=>{
+//           setPassword(e.target.value)
+//         }}
+//         />
+//         <button
+//         className="signup-login-btn"
+//          onClick={()=>{
+//           signup();
+//         }}>
+//           Signup</button>
+//           </div>
+//         <p className="info-text">
+//           If you have an account {" "}
+//           <a href="/"
+//           className="signup-login-anchor"
+//             onClick={() => {
+//               toLogin();
+//             }}
+//           >
+//             {" "}
+//             Login
+//           </a>
+//           {" "}
+//         </p>
+//       </div>
+//     );
+//   }
+// export default Signup;

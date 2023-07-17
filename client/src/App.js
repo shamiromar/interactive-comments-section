@@ -14,7 +14,6 @@ function App() {
       <Router>
       <NavBar/>
         <div>
-
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -23,6 +22,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      
     </div>
   );
 }

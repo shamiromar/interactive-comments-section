@@ -2,37 +2,60 @@ const User = require("../modules/user.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
+//sign up
 const signup = async (req, res) => {
   const checkUser = await User.findOne({ email: req.body.email });
   if (checkUser) {
-    res.send({ msg: "email already exists" });
-    return;
-  }
-  const checkUsername = await User.findOne({ username: req.body.username });
-  if (checkUsername) {
-    res.send({ msg: "This username is already been used" });
+    res.send({ msg: "You already have an account" });
     return;
   }
   bcrypt.genSalt(10, function (err, salt) {
-    bcrypt.hash(req.body.password, salt, async (err, hash) => {
+    bcrypt.hash(req.body.password, salt, async function (err, hash) {
       const user = {
-        username: req.body.username,
+
         email: req.body.email,
         password: hash,
       };
-      const createdUser = await User.create(user);
-      const token = jwt.sign({ id: createdUser._id }, "difficultPrivateKey");
+      const newUser = await User.create(user);
+      var token = jwt.sign({ id: newUser._id }, "greenfield");
       res.send({ token });
     });
   });
 };
+
+
+// const signup = async (req, res) => {
+//   const checkUser = await User.findOne({ email: req.body.email });
+//   if (checkUser) {
+//     res.send({ msg: "Email already exists" });
+//     return;
+//   }
+//   const checkUsername = await User.findOne({ username: req.body.username });
+//   if (checkUsername) {
+//     res.send({ msg: "This username is already in use" });
+//     return;
+//   }
+//   bcrypt.genSalt(10, function (err, salt) {
+//     bcrypt.hash(req.body.password, salt, async (err, hash) => {
+//       const user = {
+//         username: req.body.username,
+//         email: req.body.email,
+//         password: hash,
+//       };
+//       const createdUser = await User.create(user);
+//       const token = jwt.sign({ id: createdUser._id }, "difficultPrivateKey");
+//       res.send({ token });
+//     });
+//   });
+// };
 
 const login = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (user) {
     bcrypt.compare(req.body.password, user.password, function (err, result) {
       if (result) {
-        const token = jwt.sign({ id: user._id }, "difficultPrivateKey");
+        const token = jwt.sign({ id: user._id }, "greenfield");
         res.send({ token });
       } else {
         res.send({ msg: "wrong password" });
@@ -50,11 +73,11 @@ const verify = async (req, res) => {
   }
   // decrypt and get back the user id
   try {
-    const payload = jwt.verify(req.body.token, "difficultPrivateKey");
+    const payload = jwt.verify(req.body.token, "greenfield");
     if (payload) {
       const user = await User.findOne({ _id: payload.id });
       if (user) {
-        const token = jwt.sign({ _id: user._id }, "difficultPrivateKey");
+        const token = jwt.sign({ _id: user._id }, "greenfield");
         res.send({
           userData: user,
           token: token,
