@@ -11,44 +11,36 @@ function PostPage() {
   const [title, setTitle] = useState("");
   const [comments, setComments] = useState([]);
   const [date, setDate] = useState(new Date());
-  const [replies, setReplies] = useState([]);
-  const [reply, setReply] = useState("");
-  const [newReply, setNewReply] = useState({
-    content: reply,
-    username: user.username,
-    userId: user._id,
-    date: new Date(),
-    commentId: comments._id,
-  });
 
   function submitComment() {
-    if (localStorage.getItem("token")) {
+    if (localStorage.token) {
       axios
         .post("http://localhost:3005/user/verify", {
           token: localStorage.getItem("token"),
         })
         .then(({ data }) => {
+          //setUser(data);
           console.log(data);
           if (data._id) {
             setUser(data);
             console.log({
               title: localStorage.topic,
               content: comment,
-              username: user.username,
-              userId: user._id,
+              username: data.username,
+              userId: data._id,
               date: new Date(),
             });
             axios
               .post("http://localhost:3005/comment/new", {
                 title: localStorage.topic,
                 content: comment,
-                username: user.username,
-                userId: user._id,
+                username: data.username,
+                userId: data._id,
                 date: new Date(),
               })
               .then(({ data }) => {
                 alert(data.msg);
-                //window.location.reload(false);
+                window.location.reload(false);
               });
           } else {
             console.log("wrong");
@@ -159,7 +151,7 @@ function PostPage() {
               <div>
                 <li>
                   {comments.username}
-                  {comments.content}
+                  <div>{comments.content}</div>
                 </li>
               </div>
             );

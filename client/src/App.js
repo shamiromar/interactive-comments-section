@@ -6,6 +6,7 @@ import AllComments from "./Components/AllComments";
 import CreatePost from "./Components/CreatePost";
 import PostPage from "./Components/PostPage";
 import TopicTable from "./Components/TopicTable";
+import Home from "./Components/Home";
 import NavBar from "./Components/Navbar";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -16,6 +17,7 @@ function App() {
         <NavBar />
         <div>
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/topicTable" element={<TopicTable />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -26,7 +28,6 @@ function App() {
           </Routes>
         </div>
       </Router>
-      
     </div>
   );
 }
