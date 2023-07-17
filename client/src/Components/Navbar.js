@@ -7,10 +7,19 @@ import { useNavigate } from "react-router-dom";
 
 function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
+
+  function toLogin() {
+    navigate("/login");
+  }
+
+  function toSignup() {
+    navigate("/signup");
+  }
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -18,6 +27,7 @@ function NavBar() {
 
   const signOut = () => {
     localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
@@ -26,8 +36,8 @@ function NavBar() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#Home">Home</Nav.Link>
-            <Nav.Link href="#Forum">Forum</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/topicTable">Forum</Nav.Link>
           </Nav>
           <Nav>
             {isLoggedIn ? (
@@ -43,10 +53,24 @@ function NavBar() {
               </Button>
             ) : (
               <div>
-                <Button variant="info" size="sm" onClick={handleLogin}>
+                <Button
+                  variant="info"
+                  size="sm"
+                  onClick={() => {
+                    toLogin();
+                    handleLogin();
+                  }}
+                >
                   Login
                 </Button>
-                <Button variant="info" size="sm" onClick={handleLogout}>
+                <Button
+                  variant="info"
+                  size="sm"
+                  onClick={() => {
+                    toSignup();
+                    handleLogin();
+                  }}
+                >
                   Signup
                 </Button>
               </div>
