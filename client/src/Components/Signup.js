@@ -82,6 +82,7 @@ function Signup() {
   );
 }
 export default Signup;
+<<<<<<< HEAD
 
 
 
@@ -157,3 +158,5 @@ export default Signup;
 
 
 
+=======
+>>>>>>> 12f369311e30c8ba8e032248d280d17d967f4a1e

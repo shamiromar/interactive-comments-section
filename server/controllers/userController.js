@@ -73,6 +73,7 @@ module.exports = {
   verify,
 };
 
+<<<<<<< HEAD
 
 
 
@@ -176,3 +177,5 @@ module.exports = {
 //   login,
 //   verify,
 // };
+=======
+>>>>>>> 12f369311e30c8ba8e032248d280d17d967f4a1e
