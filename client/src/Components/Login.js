@@ -1,5 +1,4 @@
-
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
@@ -13,27 +12,16 @@ function Login() {
   }
 
   function login() {
-    if (email && password) {
-      axios
-        .post("http://localhost:3005/user/login", {
-          email,
-          password,
-        })
-        .then(({ data }) => {
-          console.log(data);
-          if (data.token) {
-            localStorage.setItem("token", data.token);
-            navigate("/comments");
-          } else {
-            alert(data.msg);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      alert("Enter email and password");
-    }
+    axios
+      .post("http://localhost:3005/user/login", { email, password })
+      .then(({ data }) => {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          navigate("/topicTable");
+        } else {
+          alert(data.msg);
+        }
+      });
   }
 
   return (
@@ -54,15 +42,26 @@ function Login() {
             setPassword(e.target.value);
           }}
         />
-        <button className="signup-login-btn" onClick={login}>
+        <button
+          className="signup-login-btn"
+          onClick={() => {
+            login();
+          }}
+        >
           Login
         </button>
       </div>
       <p className="info-text">
         If you do not have an account{" "}
-        <Link to="/signup" className="signup-login-anchor">
+        <a
+          className="signup-login-anchor"
+          onClick={() => {
+            toSignup();
+          }}
+        >
+          {" "}
           Signup Here
-        </Link>
+        </a>
       </p>
     </div>
   );
@@ -73,8 +72,7 @@ export default Login;
 
 
 
-
-// import { useNavigate } from "react-router-dom";
+// import { useNavigate, Link } from "react-router-dom";
 // import { useState } from "react";
 // import axios from "axios";
 
@@ -87,19 +85,6 @@ export default Login;
 //     navigate("/signup");
 //   }
 
-//   // function login() {
-//   //   axios
-//   //     .post("http://localhost:3005/user/login", { email, password })
-//   //     .then(({ data }) => {
-//   //       if (data.token) {
-//   //         localStorage.setItem("token", data.token);
-//   //         navigate("/comments");
-//   //       } else {
-//   //         alert(data.msg);
-//   //       }
-//   //     });
-//   // }
-
 //   function login() {
 //     if (email && password) {
 //       axios
@@ -111,7 +96,7 @@ export default Login;
 //           console.log(data);
 //           if (data.token) {
 //             localStorage.setItem("token", data.token);
-//             navigate("/userinput");
+//             navigate("/comments");
 //           } else {
 //             alert(data.msg);
 //           }
@@ -142,31 +127,22 @@ export default Login;
 //             setPassword(e.target.value);
 //           }}
 //         />
-//         <button
-//           className="signup-login-btn"
-//           onClick={() => {
-//             login();
-//           }}
-//         >
+//         <button className="signup-login-btn" onClick={login}>
 //           Login
 //         </button>
 //       </div>
 //       <p className="info-text">
 //         If you do not have an account{" "}
-//         <a href="/signup"
-//           className="signup-login-anchor"
-//           onClick={(e) => {
-//             e.preventDefault() ;
-//             toSignup();
-//           }}
-//         >
-//           {" "}
+//         <Link to="/signup" className="signup-login-anchor">
 //           Signup Here
-//         </a>
-//         {" "}
+//         </Link>
 //       </p>
 //     </div>
 //   );
 // }
 
 // export default Login;
+
+
+
+
