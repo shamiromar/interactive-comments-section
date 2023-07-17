@@ -9,7 +9,7 @@ function Signup() {
   const [username, setUsername] = useState("");
 
   function toLogin() {
-    navigate("/");
+    navigate("/login");
   }
   function signup() {
     if (email && username && password) {
@@ -22,7 +22,7 @@ function Signup() {
         .then(({ data }) => {
           if (data.token) {
             localStorage.setItem("token", data.token);
-            navigate("/comments");
+            navigate("/topicTable");
           } else {
             alert(data.msg);
           }
