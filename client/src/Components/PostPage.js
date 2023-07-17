@@ -19,7 +19,6 @@ function PostPage() {
           token: localStorage.getItem("token"),
         })
         .then(({ data }) => {
-          //setUser(data);
           console.log(data);
           if (data._id) {
             setUser(data);
@@ -28,7 +27,7 @@ function PostPage() {
               content: comment,
               username: data.username,
               userId: data._id,
-              date: new Date(),
+              date: date,
             });
             axios
               .post("http://localhost:3005/comment/new", {
@@ -36,7 +35,16 @@ function PostPage() {
                 content: comment,
                 username: data.username,
                 userId: data._id,
-                date: new Date(),
+                date:
+                  date.getDate() +
+                  "/" +
+                  (date.getMonth() + 1) +
+                  "/" +
+                  date.getFullYear() +
+                  " " +
+                  date.getHours() +
+                  ":" +
+                  date.getMinutes(),
               })
               .then(({ data }) => {
                 alert(data.msg);
@@ -152,6 +160,7 @@ function PostPage() {
                 <li>
                   {comments.username}
                   <div>{comments.content}</div>
+                  {comments.date}
                 </li>
               </div>
             );
