@@ -17,7 +17,7 @@ function Login() {
       .then(({ data }) => {
         if (data.token) {
           localStorage.setItem("token", data.token);
-          navigate("/");
+          navigate("/topicTable");
         } else {
           alert(data.msg);
         }
@@ -68,3 +68,4 @@ function Login() {
 }
 
 export default Login;
+
