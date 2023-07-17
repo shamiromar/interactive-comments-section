@@ -49,17 +49,98 @@ function PostPage() {
               .then(({ data }) => {
                 alert(data.msg);
                 //window.location.reload(false);
+                axios
+                  .get("http://localhost:3005/comment/title/" + localStorage.topic)
+                  .then(({ data }) => {
+                    if (data) {
+                      setComments(data);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("Error fetching comments after submission:", error);
+                  });
+              })
+              .catch((error) => {
+                console.error("Error submitting comment:", error);
               });
           } else {
             console.log("wrong");
             navigate("/topicTable"); //go to login
           }
+        })
+        .catch((error) => {
+          console.error("Error verifying user:", error);
         });
     } else {
       window.alert("you have to login to make a comment");
       navigate("/login"); // go to login
     }
   }
+
+  
+
+  //Function to Delete Comment
+  function deleteComment(commentId) {
+    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
+    if (confirmDelete) {
+      axios
+        .delete(`http://localhost:3005/comment/${commentId}`)
+        .then(({ data }) => {
+          if (data.msg === "comment deleted") {
+            // Refresh comments after successful deletion
+            axios
+              .get("http://localhost:3005/comment/title/" + localStorage.topic)
+              .then(({ data }) => {
+                if (data) {
+                  setComments(data);
+                }
+              })
+              .catch((error) => {
+                console.error("Error fetching comments after deletion:", error);
+              });
+          }
+        })
+        .catch((error) => {
+          console.error("Error deleting comment:", error);
+        });
+    }
+  }
+
+  useEffect(() => {
+    if (localStorage.topic) {
+      axios.get("http://localhost:3005/post/title/" + localStorage.topic)
+        .then(({ data }) => {
+          setTitle(data[0].title);
+          setPost(data[0].content);
+        })
+        .catch((error) => {
+          console.error("Error fetching post:", error);
+        });
+
+      axios.get("http://localhost:3005/comment/title/" + localStorage.topic)
+        .then(({ data }) => {
+          if (data) {
+            setComments(data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching comments:", error);
+        });
+    } else {
+      navigate("/topicTable");
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update the newReply state whenever reply or user changes
+    setNewReply({
+      content: reply,
+      username: user.username,
+      userId: user._id,
+      date: new Date(),
+      commentId: comments._id,
+    });
+  }, [reply, user]);
 
   /*function replyOnComment() {
     if (localStorage.getItem("token")) {
@@ -88,45 +169,46 @@ function PostPage() {
     }
   }*/
 
-  useEffect(() => {
-    if (localStorage.topic) {
-      axios
-        .get("http://localhost:3005/post/title/" + localStorage.topic)
-        .then(({ data }) => {
-          console.log(data[0].title);
-          setTitle(data[0].title);
-          setPost(data[0].content);
-          axios
-            .get("http://localhost:3005/comment/title/" + localStorage.topic)
-            .then(({ data }) => {
-              if (data) {
-                console.log(data);
-                setComments(data);
-              }
-            });
+  // useEffect(() => {
+  //   if (localStorage.topic) {
+  //     axios
+  //       .get("http://localhost:3005/post/title/" + localStorage.topic)
+  //       .then(({ data }) => {
+  //         console.log(data[0].title);
+  //         setTitle(data[0].title);
+  //         setPost(data[0].content);
 
-          /*axios
-            .get("http://localhost:3005/comment/title/" + localStorage.topic)
-            .then(({ data }) => {
-              console.log(data);
-              if (data) {
-                console.log(data);
-                setComments(data);
-                axios
-                  .get("http://localhost:3005/reply/" + res._id)
-                  .then(({ reply }) => {
-                    if (reply) {
-                      setReplies(reply);
-                    }
-                  });
-              }
-            });*/
-        });
-    } else {
-      navigate("/topicTable");
-    }
-    //localStorage.removeItem("topic");
-  }, []);
+  //         axios
+  //           .get("http://localhost:3005/comment/title/" + localStorage.topic)
+  //           .then(({ data }) => {
+  //             if (data) {
+  //               console.log(data);
+  //               setComments(data);
+  //             }
+  //           });
+
+  //         /*axios
+  //           .get("http://localhost:3005/comment/title/" + localStorage.topic)
+  //           .then(({ data }) => {
+  //             console.log(data);
+  //             if (data) {
+  //               console.log(data);
+  //               setComments(data);
+  //               axios
+  //                 .get("http://localhost:3005/reply/" + res._id)
+  //                 .then(({ reply }) => {
+  //                   if (reply) {
+  //                     setReplies(reply);
+  //                   }
+  //                 });
+  //             }
+  //           });*/
+  //       });
+  //   } else {
+  //     navigate("/topicTable");
+  //   }
+  //   //localStorage.removeItem("topic");
+  // }, []);
 
   return (
     <div>
@@ -154,16 +236,15 @@ function PostPage() {
       </button>
       <div>
         <ul>
-          {comments.map((comments) => {
-            return (
-              <div>
-                <li>
-                  {comments.username}
-                  {comments.content}
-                </li>
-              </div>
-            );
-          })}
+        {comments.map((comment) => (
+            <div key={comment._id}>
+              <li>
+                {comment.username}
+                {comment.content}
+                <button onClick={() => deleteComment(comment._id)}>Delete</button>
+              </li>
+            </div>
+          ))}
         </ul>
       </div>
     </div>
