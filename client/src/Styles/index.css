@@ -19,6 +19,7 @@ a {
 body {
   min-height: 100%;
   background-color: rgb(205, 189, 205);
+  color: rgb(58, 1, 58);
 }
 
 html,
@@ -80,4 +81,162 @@ li {
 
 em {
   color: rgb(38, 0, 38);
+}
+
+.table {
+  border-bottom-color: 1px solid rgb(38, 0, 38);
+  padding: 0px;
+  width: max-content;
+  justify-self: left;
+}
+
+.tableList {
+  min-width: 500px;
+  text-align: start;
+  border-bottom: 1px solid rgb(38, 0, 38);
+  height: 35px;
+  color: rgb(58, 1, 58);
+  text-indent: 10px;
+  margin-top: 3px;
+}
+
+.tableList:hover {
+  cursor: pointer;
+  color: rgb(176, 2, 176);
+  text-decoration: underline;
+}
+
+.tableContainer {
+  display: grid;
+  justify-content: center;
+  outline: 2px solid rgb(38, 0, 38);
+  padding: 0px;
+  width: max-content;
+  border-radius: 5px;
+  justify-self: center;
+}
+
+.createBtn {
+  width: fit-content;
+  justify-self: end;
+  background-color: rgb(205, 148, 205);
+  border-color: rgb(205, 148, 205);
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 80px;
+  margin-right: 450px;
+}
+
+.generalContainer {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(205, 189, 205);
+  height: 100vh;
+  min-width: 100vw;
+  max-width: max-content;
+}
+.generalHeading {
+  text-align: center;
+  margin: 80px;
+  color: white;
+}
+
+.generalHeader {
+  background-color: purple;
+  width: 100vw;
+  height: 150px;
+  background-image: url(C:\Users\sofia\OneDrive\Desktop\interactive-comments-section\client\6420877.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  box-shadow: 0 8px 8px -4px rgb(38, 0, 38);
+}
+
+.contentContainer {
+  display: grid;
+}
+
+.alignment {
+  display: grid;
+  justify-content: center;
+  margin: 20px;
+  min-width: 500px;
+}
+
+.postTopic {
+  margin: 10px;
+}
+
+.postTitle {
+  width: 900px;
+  height: 40px;
+  margin-bottom: 20px;
+  text-indent: 10px;
+}
+
+.postBody {
+  width: 900px;
+  margin-bottom: 20px;
+  text-indent: 10px;
+}
+
+.editBtn {
+  border: none;
+  text-decoration: underline;
+  background: none;
+  justify-self: end;
+  color: rgb(58, 1, 58);
+}
+
+.editBtn:hover {
+  color: rgb(176, 2, 176);
+}
+
+textarea:focus {
+  outline: none;
+}
+
+.commentElement {
+  border: 1px solid rgb(38, 0, 38);
+  margin-bottom: 10px;
+  width: 700px;
+}
+
+.submitBtn {
+  width: fit-content;
+  justify-self: end;
+  background-color: rgb(205, 148, 205);
+  border-color: rgb(205, 148, 205);
+  height: 30px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.commentForm {
+  width: 500px;
+}
+
+.input {
+  margin: 20px;
+  border-radius: 5px;
+  width: 300px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.signup-login-btn {
+  margin: 20px;
+  background-color: rgb(205, 148, 205);
+  border-color: rgb(205, 148, 205);
+  height: 30px;
+  border-radius: 5px;
+  width: 80px;
+  justify-self: center;
+}
+
+.info-text {
+  text-align: center;
 }

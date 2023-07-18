@@ -215,16 +215,21 @@ function PostPage() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <textarea value={title}></textarea>
+    <div className="generalContainer">
+      <div className="generalHeader">
+        <h1 className="generalHeading">Breastfeeding.com</h1>
+      </div>
+      <div className="alignment postTopic">
+        <textarea className="postTitle" value={title}></textarea>
         <textarea
+          className="postBody"
           value={post}
           onChange={(e) => {
             setPost(e.target.value);
           }}
         ></textarea>
         <button
+          className="editBtn"
           onClick={() => {
             editPost();
           }}
@@ -232,33 +237,38 @@ function PostPage() {
           Edit
         </button>
       </div>
+      <div className="alignment">
+        <label htmlFor="comment"></label>
+        <textarea
+          className="commentForm"
+          placeholder="Comment"
+          value={comment}
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
+        ></textarea>
+        <button
+          className="submitBtn"
+          onClick={() => {
+            submitComment();
+          }}
+        >
+          Submit
+        </button>
+      </div>
 
-      <label htmlFor="comment"></label>
-      <textarea
-        placeholder="Comment"
-        value={comment}
-        onChange={(e) => {
-          setComment(e.target.value);
-        }}
-      ></textarea>
-      <button
-        onClick={() => {
-          submitComment();
-        }}
-      >
-        Submit
-      </button>
       <div>
         <ul>
           {comments.map((comments) => {
             return (
-              <div>
+              <div className="commentElement">
                 <li>
                   {comments.username}
                   <div>{comments.content}</div>
                   {comments.date}
                   <div>
                     <button
+                      className="editBtn"
                       onClick={() => {
                         editComment(comments._id, comments.userId);
                       }}
@@ -266,6 +276,7 @@ function PostPage() {
                       Edit
                     </button>
                     <button
+                      className="editBtn"
                       onClick={() => {
                         deleteComment(comments._id, comments.userId);
                       }}

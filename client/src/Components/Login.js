@@ -25,14 +25,13 @@ function Login() {
   }
 
   return (
-    <div className="homeContainer">
-      <div className="homeHeader">
-        <h1 className="homeHeading">
-          <em>Breast</em>feeding.com
-        </h1>
+    <div className="generalContainer">
+      <div className="generalHeader">
+        <h1 className="generalHeading">Breastfeeding.com</h1>
       </div>
-      <div className="input-button-container">
+      <div className="alignment">
         <input
+          className="input"
           type="email"
           placeholder="email"
           onChange={(e) => {
@@ -40,6 +39,7 @@ function Login() {
           }}
         />
         <input
+          className="input"
           type="password"
           placeholder="password"
           onChange={(e) => {
@@ -54,19 +54,19 @@ function Login() {
         >
           Login
         </button>
+        <p className="info-text">
+          If you do not have an account{" "}
+          <a
+            className="signup-login-anchor"
+            onClick={() => {
+              toSignup();
+            }}
+          >
+            {" "}
+            Signup Here
+          </a>
+        </p>
       </div>
-      <p className="info-text">
-        If you do not have an account{" "}
-        <a
-          className="signup-login-anchor"
-          onClick={() => {
-            toSignup();
-          }}
-        >
-          {" "}
-          Signup Here
-        </a>
-      </p>
     </div>
   );
 }

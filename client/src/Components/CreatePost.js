@@ -55,30 +55,39 @@ function CreatePost() {
   }
 
   return (
-    <div>
-      <label htmlFor="title">Title:</label>
-      <textarea
-        placeholder="Title"
-        value={title}
-        onChange={(e) => {
-          setTitle(e.target.value);
-        }}
-      ></textarea>
-      <label htmlFor="post">New Post:</label>
-      <textarea
-        placeholder="New Post"
-        value={post}
-        onChange={(e) => {
-          setPost(e.target.value);
-        }}
-      ></textarea>
-      <button
-        onClick={() => {
-          submitPost();
-        }}
-      >
-        Submit
-      </button>
+    <div className="generalContainer">
+      <div className="generalHeader">
+        <h1 className="generalHeading">Breastfeeding.com</h1>
+      </div>
+      <div className="alignment">
+        <h3 className="headerText">Create a new topic</h3>
+        <label htmlFor="title">Title:</label>
+        <textarea
+          className="postTitle"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        ></textarea>
+        <label htmlFor="post">New Post:</label>
+        <textarea
+          className="postBody"
+          placeholder="New Post"
+          value={post}
+          onChange={(e) => {
+            setPost(e.target.value);
+          }}
+        ></textarea>
+        <button
+          className="submitBtn"
+          onClick={() => {
+            submitPost();
+          }}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 }
