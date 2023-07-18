@@ -11,6 +11,8 @@ function PostPage() {
   const [title, setTitle] = useState("");
   const [comments, setComments] = useState([]);
   const [date, setDate] = useState(new Date());
+  const [postUserId, setPostUserId] = useState("");
+  const [postId, setPostId] = useState("");
 
   function submitComment() {
     if (localStorage.token) {
@@ -22,34 +24,31 @@ function PostPage() {
           console.log(data);
           if (data._id) {
             setUser(data);
-            console.log({
-              title: localStorage.topic,
-              content: comment,
-              username: data.username,
-              userId: data._id,
-              date: date,
-            });
-            axios
-              .post("http://localhost:3005/comment/new", {
-                title: localStorage.topic,
-                content: comment,
-                username: data.username,
-                userId: data._id,
-                date:
-                  date.getDate() +
-                  "/" +
-                  (date.getMonth() + 1) +
-                  "/" +
-                  date.getFullYear() +
-                  " " +
-                  date.getHours() +
-                  ":" +
-                  date.getMinutes(),
-              })
-              .then(({ data }) => {
-                alert(data.msg);
-                window.location.reload(false);
-              });
+            if (comment) {
+              axios
+                .post("http://localhost:3005/comment/new", {
+                  title: localStorage.topic,
+                  content: comment,
+                  username: data.username,
+                  userId: data._id,
+                  date:
+                    date.getDate() +
+                    "/" +
+                    (date.getMonth() + 1) +
+                    "/" +
+                    date.getFullYear() +
+                    " " +
+                    date.getHours() +
+                    ":" +
+                    date.getMinutes(),
+                })
+                .then(({ data }) => {
+                  alert(data.msg);
+                  window.location.reload(false);
+                });
+            } else {
+              alert("Add content to your comment");
+            }
           } else {
             console.log("wrong");
             navigate("/topicTable"); //go to login
@@ -61,41 +60,145 @@ function PostPage() {
     }
   }
 
-  /*function replyOnComment() {
-    if (localStorage.getItem("token")) {
+  function deleteComment(commentId, commentUserId) {
+    if (localStorage.token) {
       axios
         .post("http://localhost:3005/user/verify", {
           token: localStorage.getItem("token"),
         })
         .then(({ data }) => {
+          console.log(data);
           if (data._id) {
             setUser(data);
-            console.log(data._id);
-            axios
-              .post("http://localhost:3005/reply", newReply)
-              .then(({ data }) => {
-                console.log(newReply);
-                alert(data.msg);
-                //window.location.reload(false);
-              });
-          } else {
-            navigate("/"); //go to login
+            if (data._id === commentUserId) {
+              const shouldDelete = window.confirm(
+                "Are you sure you want to delete this comment?"
+              );
+              if (shouldDelete) {
+                axios
+                  .delete("http://localhost:3005/comment/delete/" + commentId)
+                  .then(({ data }) => {
+                    alert(data.msg);
+                    window.location.reload(false);
+                  });
+              }
+            } else {
+              alert("You can't delete this comment");
+            }
           }
         });
     } else {
-      window.alert("you have to login to reply");
-      navigate("/login"); // go to login
+      alert("Login to delete comment");
     }
-  }*/
+  }
+
+  function editComment(commentId, commentUserId) {
+    if (localStorage.token) {
+      axios
+        .post("http://localhost:3005/user/verify", {
+          token: localStorage.getItem("token"),
+        })
+        .then(({ data }) => {
+          console.log(data);
+          if (data._id) {
+            setUser(data);
+            if (data._id === commentUserId) {
+              if (comment) {
+                axios
+                  .put("http://localhost:3005/comment/edit/" + commentId, {
+                    title: localStorage.topic,
+                    content: comment,
+                    username: data.username,
+                    userId: data._id,
+                  })
+                  .then(({ data }) => {
+                    alert(data.msg);
+                    window.location.reload(false);
+                  });
+              }
+            } else {
+              alert("You can't edit this comment");
+            }
+          }
+        });
+    } else {
+      alert("Login to edit comment");
+    }
+  }
+
+  function editPost() {
+    if (localStorage.token) {
+      axios
+        .post("http://localhost:3005/user/verify", {
+          token: localStorage.getItem("token"),
+        })
+        .then(({ data }) => {
+          console.log(data);
+          if (data._id) {
+            setUser(data);
+            if (data._id === postUserId) {
+              if (post) {
+                axios
+                  .put("http://localhost:3005/userProfile/edit/" + postId, {
+                    title: title,
+                    content: post,
+                    username: data.username,
+                    userId: data._id,
+                  })
+                  .then(({ data }) => {
+                    alert(data.msg);
+                    window.location.reload(false);
+                  });
+              }
+            } else {
+              alert("You can't edit this post");
+            }
+          }
+        });
+    } else {
+      alert("Login to edit post");
+    }
+  }
+
+  function deletePost() {
+    if (localStorage.token) {
+      axios
+        .post("http://localhost:3005/user/verify", {
+          token: localStorage.getItem("token"),
+        })
+        .then(({ data }) => {
+          console.log(data);
+          if (data._id) {
+            setUser(data);
+            if (data._id === postUserId) {
+              const shouldDelete = window.confirm(
+                "Are you sure you want to delete this comment?"
+              );
+              if (shouldDelete) {
+                axios
+                  .put("http://localhost:3005/userProfile/delete/" + postId)
+                  .then(({ data }) => {
+                    alert(data.msg);
+                    window.location.reload(false);
+                  });
+              }
+            } else {
+              alert("You can't delete this post");
+            }
+          }
+        });
+    }
+  }
 
   useEffect(() => {
     if (localStorage.topic) {
       axios
         .get("http://localhost:3005/post/title/" + localStorage.topic)
         .then(({ data }) => {
-          console.log(data[0].title);
           setTitle(data[0].title);
           setPost(data[0].content);
+          setPostUserId(data[0].userId);
+          setPostId(data[0]._id);
           axios
             .get("http://localhost:3005/comment/title/" + localStorage.topic)
             .then(({ data }) => {
@@ -104,23 +207,6 @@ function PostPage() {
                 setComments(data);
               }
             });
-
-          /*axios
-            .get("http://localhost:3005/comment/title/" + localStorage.topic)
-            .then(({ data }) => {
-              console.log(data);
-              if (data) {
-                console.log(data);
-                setComments(data);
-                axios
-                  .get("http://localhost:3005/reply/" + res._id)
-                  .then(({ reply }) => {
-                    if (reply) {
-                      setReplies(reply);
-                    }
-                  });
-              }
-            });*/
         });
     } else {
       navigate("/topicTable");
@@ -130,13 +216,23 @@ function PostPage() {
 
   return (
     <div>
-      <textarea placeholder="Title" value={title}></textarea>
-      <textarea
-        value={post}
-        onChange={(e) => {
-          setPost(e.target.value);
-        }}
-      ></textarea>
+      <div>
+        <textarea value={title}></textarea>
+        <textarea
+          value={post}
+          onChange={(e) => {
+            setPost(e.target.value);
+          }}
+        ></textarea>
+        <button
+          onClick={() => {
+            editPost();
+          }}
+        >
+          Edit
+        </button>
+      </div>
+
       <label htmlFor="comment"></label>
       <textarea
         placeholder="Comment"
@@ -161,6 +257,22 @@ function PostPage() {
                   {comments.username}
                   <div>{comments.content}</div>
                   {comments.date}
+                  <div>
+                    <button
+                      onClick={() => {
+                        editComment(comments._id, comments.userId);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        deleteComment(comments._id, comments.userId);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </li>
               </div>
             );

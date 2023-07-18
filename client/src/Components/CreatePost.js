@@ -20,17 +20,30 @@ function CreatePost() {
           if (data._id) {
             setUser(data);
             console.log(data._id);
-            axios
-              .post("http://localhost:3005/userProfile/postNew", {
-                title: title,
-                content: post,
-                username: user.username,
-                userId: user._id,
-                date: date,
-              })
-              .then(({ data }) => {
-                alert(data.msg);
-              });
+            if (title && post) {
+              axios
+                .post("http://localhost:3005/userProfile/postNew", {
+                  title: title,
+                  content: post,
+                  username: user.username,
+                  userId: user._id,
+                  date:
+                    date.getDate() +
+                    "/" +
+                    (date.getMonth() + 1) +
+                    "/" +
+                    date.getFullYear() +
+                    " " +
+                    date.getHours() +
+                    ":" +
+                    date.getMinutes(),
+                })
+                .then(({ data }) => {
+                  alert(data.msg);
+                });
+            } else {
+              alert("You should have a title and content to post");
+            }
           } else {
             navigate("/");
           }
