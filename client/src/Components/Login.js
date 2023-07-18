@@ -25,8 +25,12 @@ function Login() {
   }
 
   return (
-    <div className="signup-login-container">
-      <h1 className="app-title">Comment Section</h1>
+    <div className="homeContainer">
+      <div className="homeHeader">
+        <h1 className="homeHeading">
+          <em>Breast</em>feeding.com
+        </h1>
+      </div>
       <div className="input-button-container">
         <input
           type="email"

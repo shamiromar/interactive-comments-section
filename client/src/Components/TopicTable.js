@@ -16,31 +16,37 @@ function TopicTable() {
     });
   }, []);
   return (
-    <div>
-      <button
-        onClick={() => {
-          toCreatePost();
-        }}
-      >
-        Create new topic
-      </button>
-      <ul>
-        {topics.map((topics) => {
-          return (
-            <div>
-              <li
-                key={topics._id}
-                onClick={() => {
-                  localStorage.setItem("topic", topics.title);
-                  navigate("/post");
-                }}
-              >
-                {topics.title}
-              </li>
-            </div>
-          );
-        })}
-      </ul>
+    <div className="homeContainer">
+      <div className="homeHeader">
+        <h1 className="homeHeading">Welcome to Breastfeeding.com</h1>
+      </div>
+      <div className="tableContainer">
+        <button
+          onClick={() => {
+            toCreatePost();
+          }}
+        >
+          Create new topic
+        </button>
+        <ul>
+          {topics.map((topics) => {
+            return (
+              <div className="table">
+                <li
+                  className="tableList"
+                  key={topics._id}
+                  onClick={() => {
+                    localStorage.setItem("topic", topics.title);
+                    navigate("/post");
+                  }}
+                >
+                  {topics.title}
+                </li>
+              </div>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

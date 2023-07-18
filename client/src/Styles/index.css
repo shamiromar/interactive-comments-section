@@ -14,5 +14,70 @@ code {
 
 a {
   cursor: pointer;
-  color: blue;
+  color: purple;
+}
+body {
+  min-height: 100%;
+  background-color: rgb(205, 189, 205);
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+.homeContainer {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(205, 189, 205);
+  height: 100vh;
+  width: 100vw;
+}
+.homeText {
+  margin-top: 40px;
+  margin-left: 250px;
+  margin-right: 250px;
+  height: 360px;
+  color: rgb(58, 1, 58);
+}
+
+.homeHeading {
+  text-align: center;
+  margin: 80px;
+  color: white;
+}
+
+.homeHeader {
+  background-color: purple;
+  width: 100%;
+  background-image: url(C:\Users\sofia\OneDrive\Desktop\interactive-comments-section\client\6420877.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  box-shadow: 0 8px 8px -4px rgb(38, 0, 38);
+}
+
+.headerText {
+  margin-top: 40px;
+  color: rgb(58, 1, 58);
+  text-align: center;
+}
+
+.navBtn {
+  background-color: rgb(205, 148, 205) !important;
+  border-color: rgb(205, 148, 205) !important;
+  margin-right: 8px;
+}
+
+.navLink {
+  color: rgb(58, 1, 58) !important;
+}
+
+li {
+  list-style-type: none;
+}
+
+em {
+  color: rgb(38, 0, 38);
 }

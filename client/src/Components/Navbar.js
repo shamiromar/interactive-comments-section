@@ -31,53 +31,58 @@ function NavBar() {
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/topicTable">Forum</Nav.Link>
-          </Nav>
-          <Nav>
-            {isLoggedIn ? (
+    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary nav">
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="me-auto">
+          <Nav.Link className="navLink" href="/">
+            Home
+          </Nav.Link>
+          <Nav.Link className="navLink" href="/topicTable">
+            Forum
+          </Nav.Link>
+        </Nav>
+        <Nav>
+          {isLoggedIn ? (
+            <Button
+              className="navBtn"
+              variant="info"
+              size="sm"
+              onClick={() => {
+                handleLogout();
+                signOut();
+              }}
+            >
+              Logout
+            </Button>
+          ) : (
+            <div>
               <Button
+                className="navBtn"
                 variant="info"
                 size="sm"
                 onClick={() => {
-                  handleLogout();
-                  signOut();
+                  toLogin();
+                  handleLogin();
                 }}
               >
-                Logout
+                Login
               </Button>
-            ) : (
-              <div>
-                <Button
-                  variant="info"
-                  size="sm"
-                  onClick={() => {
-                    toLogin();
-                    handleLogin();
-                  }}
-                >
-                  Login
-                </Button>
-                <Button
-                  variant="info"
-                  size="sm"
-                  onClick={() => {
-                    toSignup();
-                    handleLogin();
-                  }}
-                >
-                  Signup
-                </Button>
-              </div>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+              <Button
+                className="navBtn"
+                variant="info"
+                size="sm"
+                onClick={() => {
+                  toSignup();
+                  handleLogin();
+                }}
+              >
+                Signup
+              </Button>
+            </div>
+          )}
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 }
