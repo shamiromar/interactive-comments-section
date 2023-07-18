@@ -69,7 +69,6 @@ function Login() {
 
 export default Login;
 
-<<<<<<< HEAD
 
 
 
@@ -147,5 +146,4 @@ export default Login;
 
 
 
-=======
->>>>>>> 12f369311e30c8ba8e032248d280d17d967f4a1e
+

@@ -6,6 +6,10 @@ function TopicTable() {
   const [topics, setTopics] = useState([]);
   const navigate = useNavigate();
 
+  function toCreatePost() {
+    navigate("/createPost");
+  }
+
   useEffect(() => {
     axios.get("http://localhost:3005/").then(({ data }) => {
       setTopics(data);
@@ -13,6 +17,13 @@ function TopicTable() {
   }, []);
   return (
     <div>
+      <button
+        onClick={() => {
+          toCreatePost();
+        }}
+      >
+        Create new topic
+      </button>
       <ul>
         {topics.map((topics) => {
           return (
