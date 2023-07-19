@@ -20,17 +20,30 @@ function CreatePost() {
           if (data._id) {
             setUser(data);
             console.log(data._id);
-            axios
-              .post("http://localhost:3005/userProfile/postNew", {
-                title: title,
-                content: post,
-                username: user.username,
-                userId: user._id,
-                date: date,
-              })
-              .then(({ data }) => {
-                alert(data.msg);
-              });
+            if (title && post) {
+              axios
+                .post("http://localhost:3005/userProfile/postNew", {
+                  title: title,
+                  content: post,
+                  username: user.username,
+                  userId: user._id,
+                  date:
+                    date.getDate() +
+                    "/" +
+                    (date.getMonth() + 1) +
+                    "/" +
+                    date.getFullYear() +
+                    " " +
+                    date.getHours() +
+                    ":" +
+                    date.getMinutes(),
+                })
+                .then(({ data }) => {
+                  alert(data.msg);
+                });
+            } else {
+              alert("You should have a title and content to post");
+            }
           } else {
             navigate("/");
           }
@@ -42,30 +55,39 @@ function CreatePost() {
   }
 
   return (
-    <div>
-      <label htmlFor="title">Title:</label>
-      <textarea
-        placeholder="Title"
-        value={title}
-        onChange={(e) => {
-          setTitle(e.target.value);
-        }}
-      ></textarea>
-      <label htmlFor="post">New Post:</label>
-      <textarea
-        placeholder="New Post"
-        value={post}
-        onChange={(e) => {
-          setPost(e.target.value);
-        }}
-      ></textarea>
-      <button
-        onClick={() => {
-          submitPost();
-        }}
-      >
-        Submit
-      </button>
+    <div className="generalContainer">
+      <div className="generalHeader">
+        <h1 className="generalHeading">Breastfeeding.com</h1>
+      </div>
+      <div className="alignment">
+        <h3 className="headerText">Create a new topic</h3>
+        <label htmlFor="title">Title:</label>
+        <textarea
+          className="postTitle"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        ></textarea>
+        <label htmlFor="post">New Post:</label>
+        <textarea
+          className="postBody"
+          placeholder="New Post"
+          value={post}
+          onChange={(e) => {
+            setPost(e.target.value);
+          }}
+        ></textarea>
+        <button
+          className="submitBtn"
+          onClick={() => {
+            submitPost();
+          }}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 }
