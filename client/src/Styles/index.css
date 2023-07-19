@@ -133,7 +133,7 @@ em {
   justify-content: center;
   align-items: center;
   background-color: rgb(205, 189, 205);
-  height: 100vh;
+  min-height: 100vh;
   min-width: 100vw;
   max-width: max-content;
 }
