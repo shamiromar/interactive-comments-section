@@ -1,10 +1,11 @@
 function Home() {
   return (
-    <div>
-      <div>
-        <h1>Welcome to Breastfeeding.com</h1>
-      </div>
-      <p>
+    <div className="homeContainer">
+    <div className="homeHeader">
+      <h1 className="homeHeading">Welcome to Breastfeeding.com</h1>
+    </div>
+    <h3 className="headerText">For every mom that needs help</h3>
+    <p className="homeText">
         Breastfeeding can be really hard, especially for new moms. Even though
         exclusive breastfeeding is recommended by the doctors for at least the
         first six months of a baby's life, according to the statistics, only 41%
